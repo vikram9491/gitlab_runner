@@ -1,7 +1,5 @@
 name: Gitlab Runner Service
-on:
-  repository_dispatch:
-    types: [trigger-from-gitlab]
+on: [repository_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,11 +12,10 @@ jobs:
           remove-dotnet: 'true'
           remove-android: 'true'
           remove-haskell: 'true'
-          
+
       - name: Gitlab Runner
         uses: edersonbrilhante/gitlab-runner-action@main
         with:
           registration-token: "${{ github.event.client_payload.registration_token }}"
-          docker-image: "docker:28.0.1"
           name: ${{ github.run_id }}
           tag-list: "crosscicd"
